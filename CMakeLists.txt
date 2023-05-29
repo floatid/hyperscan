@@ -199,11 +199,18 @@ else()
         string(REGEX REPLACE "march=[ \t]*([^ \n]*)[ \n].*" "\\1"
             GNUCC_ARCH "${_GCC_OUTPUT}")
 
+		if (WIN32)
+			set(OUT_NUL_DEV nul)
+		else()
+			set(OUT_NUL_DEV /dev/null)
+		endif()
+
         # test the parsed flag
         set (EXEC_ARGS ${CC_ARG1} -E - -mtune=${GNUCC_ARCH})
         execute_process(COMMAND ${CMAKE_C_COMPILER} ${EXEC_ARGS}
+			COMMAND_ECHO STDOUT
             OUTPUT_QUIET ERROR_QUIET
-            INPUT_FILE /dev/null
+            INPUT_FILE ${OUT_NUL_DEV}
             RESULT_VARIABLE GNUCC_TUNE_TEST)
         if (NOT GNUCC_TUNE_TEST EQUAL 0)
             message(SEND_ERROR "Something went wrong determining gcc tune: -mtune=${GNUCC_ARCH} not valid")

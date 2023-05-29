@@ -55,7 +55,7 @@
 # endif
 #endif
 
-#if defined(USE_X86INTRIN_H)
+#if defined(USE_X86INTRIN_H) && ! (defined (_WIN32)  && defined(__MINGW32__))
 #include <x86intrin.h>
 #elif defined(USE_INTRIN_H)
 #include <intrin.h>

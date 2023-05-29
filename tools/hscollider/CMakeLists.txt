@@ -81,7 +81,11 @@ if(HAVE_BACKTRACE)
         "${BACKTRACE_CFLAGS}")
 endif()
 else() # WIN32
-    set_target_properties(hscollider PROPERTIES LINK_FLAGS "/STACK:8388608,8388608")
+	if (MSVC)
+		set_target_properties(hscollider PROPERTIES LINK_FLAGS "/STACK:8388608,8388608")
+	else()
+		set_target_properties(hscollider PROPERTIES LINK_FLAGS "-Wl,--stack -Xlinker 8388608,8388608")
+	endif()
     if (BUILD_CHIMERA)
         target_link_libraries(hscollider hs chimera pcre databaseutil
             expressionutil corpusomatic crosscompileutil)

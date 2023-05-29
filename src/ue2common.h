@@ -100,7 +100,7 @@ typedef u32 ReportID;
 #endif
 
 /* really_inline forces inlining always */
-#if !defined(_WIN32)
+#if !defined(_WIN32) || defined(__MINGW32__)
 #if defined(HS_OPTIMIZE)
 #define really_inline inline __attribute__ ((always_inline, unused))
 #else

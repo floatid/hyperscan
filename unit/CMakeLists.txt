@@ -38,7 +38,8 @@ endif()
 
 add_definitions(-DGTEST_HAS_PTHREAD=0 -DSRCDIR=${PROJECT_SOURCE_DIR})
 
-if (WIN32)
+#/wd4309 /wd4018 are MSVC specific
+if (WIN32 AND MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4309 /wd4018")
 endif()
 
